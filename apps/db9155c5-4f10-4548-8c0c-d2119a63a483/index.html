@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Terminal</title>
+    <link rel="stylesheet" href="../../node_modules/@xterm/xterm/css/xterm.css">
+    
+    <style>
+        html, body {
+            width: 100%;
+            height: 100%;
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            background: black;
+        }
+        #terminal {
+            width: 100%;
+            height: 100%;
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        .xterm {
+            height: 100%;
+        }
+    </style>
+</head>
+<!--
+for compiling xterm-pty in wasmsrc
+
+emcc -l idbfs.js -s FORCE_FILESYSTEM=1 -s ASYNCIFY -s EXPORTED_RUNTIME_METHODS='["FS","addRunDependency","removeRunDependency"]' -s EXPORTED_FUNCTIONS='["_main"]' --js-library=../../../node_modules/xterm-pty/emscripten-pty.js -o hello.js hello.c
+-->
+<body>
+    <div id="terminal"></div>
+    <script src="../../node_modules/@xterm/xterm/lib/xterm.js"></script>
+    <script src="../../node_modules/xterm-pty/index.js"></script>
+    <script src="../../node_modules/@xterm/addon-fit/lib/addon-fit.js"></script>
+    <script>
+        var xterm = new Terminal();
+        xterm.open(document.getElementById('terminal'));
+
+        const { master, slave } = openpty();
+        const fitAddon = new window.FitAddon.FitAddon();
+
+        xterm.loadAddon(fitAddon);
+        xterm.loadAddon(master);
+
+        Module = {
+            pty: slave,
+            preRun: [function() {
+                FS.mkdir('/wasm');
+
+                FS.mount(IDBFS, {}, '/wasm');
+
+                Module.addRunDependency('syncfs');
+
+                FS.syncfs(true, function (err) {
+                  if (err) {
+                    console.error("fs_load: fail", err);
+                  } else {
+                    console.log("fs_load: success");
+                  }
+
+                  Module.removeRunDependency('syncfs');
+                });
+
+                setInterval(function() {
+                    if (Module.isSyncing) return;
+                    Module.isSyncing = true;
+                    FS.syncfs(false, function(err) {
+                        Module.isSyncing = false;
+                        if (err) console.error("auto_sync: fail", err);
+                    });
+                }, 300);
+            }]
+        };
+
+        window.addEventListener('resize', () => {
+            fitAddon.fit();
+        });
+
+        window.addEventListener('beforeunload', function() {
+            if (Module.FS) {
+                Module.FS.syncfs(false, function() {});
+            }
+        });
+
+        setInterval(() => {
+            fitAddon.fit();
+        }, 50);
+    </script>
+    <script src="wasmsrc/test.js"></script>
+</body>
+</html>
