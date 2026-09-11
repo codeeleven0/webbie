@@ -5,9 +5,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>webbie</title>
     <script src="node_modules/winbox/dist/winbox.bundle.min.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Red+Hat+Text:ital,wght@0,300..700;1,300..700&display=swap" rel="stylesheet">
     <style>
         * {
-            font-family: sans-serif;
+            font-family: "Red Hat Text", system-ui, sans-serif;
             user-select: none;
         }
         html, body {
@@ -136,6 +139,10 @@
             background: rgba(0, 0, 0, 0.4);
         }
 
+        .wb-title {
+            font-family: "Red Hat Text", system-ui, sans-serif;
+        }
+
         .winbox.max {
             border-radius: 0;
             background: black !important;
@@ -152,14 +159,10 @@
         <div id="taskbar">
             <div id="taskbar-view">
                 <div id="tasks">
-                    <div class="task-entry">
-                        <div class="app-logo">
-                            <img src="assets/apps-alt-svgrepo-com.svg" alt="" srcset="">
-                        </div>
-                    </div>
+                    
                 </div>
                 <div id="clock">
-                    xx:xx
+                    &nbsp;
                 </div>
             </div>
         </div>
@@ -214,24 +217,22 @@
             win.icon = app_img.src;
             win.onminimize = () => {
                 win.hidden = true;
-                win.toggleClass("hide");
+                win.addClass("hide");
                 tbent.style.opacity = "50%";
             };
-            win.onrestore = () => {
-                win.hidden = false;
-                win.toggleClass("hide");
-                tbent.style.opacity = "100%";
-            }
-
             tbent.addEventListener("click", () => {
                 if (win.hidden) {
                     win.restore();
+                    win.hidden = false;
+                    win.removeClass("hide");
+                    tbent.style.opacity = "100%";
                 } else {
                     win.minimize();
+                    
                 }
             });
 
-            win.toggleClass("hide");
+            win.removeClass("hide");
             win.hidden = false;
 
             win.onclose = (e) => {
