@@ -10,6 +10,9 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "dependencies": {
-    "winbox": "^0.2.82"
+    "@xterm/xterm": "^6.0.0",
+    "vanilla-calendar-pro": "^3.3.2",
+    "winbox": "^0.2.82",
+    "xterm-pty": "^0.12.0"
   }
 }
