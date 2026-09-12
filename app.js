@@ -114,4 +114,21 @@ window.addEventListener("resize", () => {
 
         win.move(x, y);
     });
-})
+});
+
+function picsum() {
+    let url = `https://picsum.photos/${window.outerWidth}/${window.outerHeight}?salt=${Math.ceil(Math.random() * 1024)}`;
+    let promise = new Promise((resolve, reject) => {
+        desktop.classList.remove("focus");
+        const img = new Image();
+        img.src = url;
+        img.onload = () => {
+            desktop.classList.add("focus");
+            document.body.style.backgroundImage = `url(${img.currentSrc || img.src})`;
+            resolve(img);
+        };
+        img.onerror = (err) => { reject(err); };
+    });
+    return promise;
+}
+picsum();

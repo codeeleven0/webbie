@@ -17,7 +17,7 @@
         function rng(max) {
             return Math.ceil(Math.random() * max)
         }
-        const desktop = parent.document.querySelector("#desktop-ui > #deskview");
+        const desktop = parent.document.querySelector("#desktop-ui");
 
         // my code from tabsandtabs adapted to here
         function picsum() {
@@ -28,7 +28,7 @@
                 img.src = url;
                 img.onload = () => {
                     desktop.classList.add("focus");
-                    parent.document.body.style.backgroundImage = `url(${url})`;
+                    parent.document.body.style.backgroundImage = `url(${img.currentSrc || img.src})`;
                     resolve(img);
                 };
                 img.onerror = (err) => { reject(err); };
@@ -39,7 +39,7 @@
             await picsum();
             setTimeout(_ => parent.window.instances[uuid].close(true), 0);
         }
-        parent.window.instances[uuid].minimize(),
+        parent.window.instances[uuid].minimize();
         doAll();
     </script>
 </body>
