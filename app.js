@@ -37,6 +37,9 @@ function openApp(app) {
     } else {
         win = newWindow(app.name, app.url, instanceUUID);
     }
+    if (app.size != undefined) {
+        win.resize(app.size[0], app.size[1]);
+    }
     win.icon = app_img.src;
     win.onminimize = () => {
         win.hidden = true;

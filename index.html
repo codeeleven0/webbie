@@ -9,6 +9,21 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Red+Hat+Text:ital,wght@0,300..700;1,300..700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
+    <style>
+        .focus {
+            animation: focus linear 1s;
+        }
+        @keyframes focus {
+            0% {
+                background: rgba(0, 0, 0, 0.8);
+                backdrop-filter: blur(20px);
+            }
+            100% {
+                background: rgba(0, 0, 0, 0.6);
+                backdrop-filter: blur(2px);
+            }
+        }
+    </style>
     <script src="apps/apps.js"></script>
 </head>
 <body>

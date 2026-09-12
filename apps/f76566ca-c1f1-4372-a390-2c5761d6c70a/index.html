@@ -4,6 +4,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Refresh Wallpaper</title>
+    <style>
+        body, html {
+            background: black;
+            color: white;
+        }
+    </style>
 </head>
 <body>
     <script>
@@ -12,8 +18,29 @@
             return Math.ceil(Math.random() * max)
         }
         const desktop = parent.document.querySelector("#desktop-ui > #deskview");
-        desktop.style.backgroundImage = `url(https://picsum.photos/2880/1880?salt=${rng(1024).toString()})`;
-        parent.window.instances[uuid].close(true);
+
+        // my code from tabsandtabs adapted to here
+        function picsum() {
+            let url = `https://picsum.photos/${parent.window.outerWidth}/${parent.window.outerHeight}?salt=${rng(1024).toString()}`;
+            let promise = new Promise((resolve, reject) => {
+                desktop.classList.remove("focus");
+                const img = new Image();
+                img.src = url;
+                img.onload = () => {
+                    desktop.classList.add("focus");
+                    parent.document.body.style.backgroundImage = `url(${url})`;
+                    resolve(img);
+                };
+                img.onerror = (err) => { reject(err); };
+            });
+            return promise;
+        }
+        async function doAll() {
+            await picsum();
+            setTimeout(_ => parent.window.instances[uuid].close(true), 0);
+        }
+        parent.window.instances[uuid].minimize(),
+        doAll();
     </script>
 </body>
 </html>

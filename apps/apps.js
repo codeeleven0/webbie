@@ -12,7 +12,8 @@ const apps = {
     "@calendar": {
         uuid: "08218d4e-3815-4326-bd3f-75b960432ec5",
         name: "Calendar",
-        icon: "calendar-week-svgrepo-com.svg"
+        icon: "calendar-week-svgrepo-com.svg",
+        size: [500, 500]
     },
     "@iframebrowser": {
         uuid: "8c43bdd3-d7c3-4d08-a817-e421c95f8a28",

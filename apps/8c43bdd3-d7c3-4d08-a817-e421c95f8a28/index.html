@@ -118,13 +118,19 @@
             try {
                 urlinput.value = iframe.contentWindow.location.href;
             } catch {
-                urlinput.value = iframe.getAttribute("src") || iframe.src;
+                urlinput.value = (iframe.getAttribute("src") || iframe.src);
                 console.log("cross origin policies block URL updates");
             }
         });
         urlinput.addEventListener("keydown", (e) => {
             if (e.key === 'Enter') {
-                iframe.src = urlinput.value;
+                try {
+                    let url = new URL(urlinput.value);
+                    iframe.src = urlinput.value;
+                } catch {
+                    iframe.src = `https://google.com/search?q=${urlinput.value}&igu=1`;
+                }
+                
             }
         })
     </script>
