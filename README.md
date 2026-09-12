@@ -32,3 +32,6 @@ the taskbar is used to minimize and restore application windows, the icon drops 
 
 # and, thank you!
 don't forget to leave a star! and if i made it to v2, please rate me on stardance!
+
+# end of day?
+i hope
