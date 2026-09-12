@@ -2,7 +2,8 @@
 webbie is a webos i built in html, css and js (wen eta wasm?). it has an elegant glassmorphic interface that is simple to use. it uses the winbox.js window manager for stable and elegant window orchestration.
 
 # trying it out
-go to the pages site thats in the right panel in my github repo or the demo link on my stardance!
+go to the pages site thats in the right panel in my github repo or the demo link on my stardance!<br>
+go to [https://codeeleven0.github.io/webbie](https://codeeleven0.github.io/webbie) to test it out!
 
 # creating apps
 creating apps for webbie is simple, create a folder with an uuid name in `apps/`, add its manifest to `apps/apps.js`. in apps, you can use webbie's components via `parent.*`/`parent.window` namespace. 
