@@ -16,7 +16,6 @@
             justify-items: center;
             align-items: center;
             text-align: center;
-            background-image: url(https://picsum.photos/2880/1800);
             background-size: cover;
         }
 
@@ -37,12 +36,19 @@
 
     <p>
         Hello! If you are here, you might be wondering "Where do these wallpapers come from?!".<br>
-        Don't worry, it's time to tell you. <br>
         We actually use <a href="http://picsum.photos" target="_blank">picsum.photos</a>, a service that provides random images in a desired resolution.<br>
         It's the "Lorem Ipsum" of images. See it in action!
     </p>
     
     </div>
 
+    <script>
+        function rng(max) {
+            return Math.ceil(Math.random() * max)
+        }
+        const body = document.body;
+        body.style.backgroundImage = `url(https://picsum.photos/2880/1880?salt=${rng(1024).toString()})`;
+
+    </script>
 </body>
 </html>

@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Refresh Wallpaper</title>
+</head>
+<body>
+    <script>
+        const uuid = new URLSearchParams(window.location.search).get("uuid");
+        function rng(max) {
+            return Math.ceil(Math.random() * max)
+        }
+        const desktop = parent.document.querySelector("#desktop-ui > #deskview");
+        desktop.style.backgroundImage = `url(https://picsum.photos/2880/1880?salt=${rng(1024).toString()})`;
+        parent.window.instances[uuid].close(true);
+    </script>
+</body>
+</html>
